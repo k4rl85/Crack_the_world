@@ -52,8 +52,11 @@ def main():
                 #print 'length = {:,}'.format(length)
 
                 chunk = ''
-                while len(chunk) < length:
-                    chunk += s.recv(length)
+                left = length - len(chunk)
+                while left:
+                    chunk += s.recv(left)
+                    left = length - len(chunk)  # devo sapere esattamente quanto devo ancora ricevere
+                    # altrimenti potrei prendere dati extra dal server e non torna niente!!
                 #print 'chunk =', chunk
                 passwords = json.loads(chunk)
                 #print '{:,}'.format(len(passwords))
